@@ -1,0 +1,121 @@
+{% extends "masterPage.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div id="step-one" class="steps steps--primary">
+        <div class="step visited">
+            <div class="step__icon"><span class="icon-check"></span></div>
+            <div class="step__label">Login & Authenitcate</div>
+        </div>
+        <div id="step-two" class="step visited">
+            <div class="step__icon">2</div>
+            <div class="step__label">Create Meetings</div>
+        </div>
+        <div id="step-three" class="step {% if updated %} visited {% else %} active {% endif %} ">
+            <div class="step__icon">{% if updated %}<span class="icon-check"></span>{% else %} 3 {% endif %}
+            </div>
+            <div class="step__label">Update CSV</div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <!-- Left Rail -->
+    <div class="col-xl-3 col-md-3">
+        <div class="section">
+            <div class="panel panel--loose panel--raised base-margin-bottom">
+                <h2 class="subtitle">Step 1</h2>
+                <hr>
+                <div class="panel-icon">
+                    <div class="flex-center-vertical">
+                        <div class="flex-center">
+                            <span class="icon-check-outline icon-size-24"></span>
+                        </div>
+                        <div class="flex-fluid half-margin-left ">
+                            Successful login & authentication
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Middle Rail -->
+    <div class="col-xl-6 col-md-6">
+        <div class="section">
+            <div class="panel panel--loose panel--raised base-margin-bottom">
+                <h2 class="subtitle">Step 2 </h2>
+                <hr>
+
+
+                <div class="alert alert--success">
+                    <div class="alert__message">Successfully created meetings.</div>
+                </div>
+                <div style="overflow:scroll;">
+                <table class="table table--lined table--selectable table">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Meeting Name</th>
+                            <th class="text-center">Meeting Number</th>
+                            <th class="text-center hidden-xs-down">Meeting ID</th>
+                            <th class="hidden-md-down">Weblink</th>
+                            <th class="hidden-md-down">Start</th>
+                            <th class="hidden-md-down">End</th>
+                            <th class="hidden-md-down">Host</th>
+                            <th class="hidden-md-down">Speaker</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for meeting in meetings %}
+                        <tr>
+                            <td class="text-center">{{meeting[0]}}</td>
+                            <td class="text-center">{{meeting[1]}}</td>
+                            <td class="text-center hidden-xs-down">{{meeting[2]}}</td>
+                            <td class="hidden-md-down">{{meeting[3]}}</td>
+                            <td class="hidden-md-down">{{meeting[4]}}</td>
+                            <td class="hidden-md-down">{{meeting[5]}}</td>
+                            <td class="hidden-md-down">{{meeting[6]}}</td>
+                            <td class="hidden-md-down">{{meeting[7]}}</td>
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Rail -->
+    <div class="col-xl-3 col-md-3">
+
+        <div class="section">
+            <div class="panel panel--loose panel--raised base-margin-bottom" hidden>
+
+                <h2 class="subtitle">Step 3 </h2>
+                <hr>
+
+                {% if updated == true %}
+                <div class="alert alert--success">
+                    <div class="alert__message">Updated CSV successful. <a href="/meeting">Add another meeting</a></div>
+                </div>
+                {% endif %}
+
+                <form id="spaces-form" action="/update" method="POST">
+
+                    <input id="update-submit" onclick="showLoadingText('update-submit', 'Updating ... ');"
+                        downloadonload="showOriginalText('update-submit', 'Add Data to CSV')" class="btn btn-primary"
+                        {% if updated==true %} disabled {% endif %} type="submit"
+                        value="Add Data to CSV">
+                </form>
+
+                {% include "alert.html" %}
+
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

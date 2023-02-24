@@ -1,0 +1,62 @@
+{% extends "masterPage.html" %}
+
+{% block content %}
+
+<div class="row">
+<div class="steps steps--primary">
+    <div class="step active">
+        <div class="step__icon active">1</div>
+        <div class="step__label">Login & Authenitcate</div>
+    </div>
+    <div class="step">
+        <div class="step__icon">2</div>
+        <div class="step__label">Create Meetings</div>
+    </div>
+    <div class="step">
+        <div class="step__icon">3</div>
+        <div class="step__label">Update CSV</div>
+    </div>
+</div>
+</div>
+
+<div class="row">
+
+    <!-- Left Rail -->
+    <div class="col-xl-3 col-md-3">
+        <div class="section">
+            <div class="panel panel--loose panel--raised base-margin-bottom">
+                <form action="/redirect">
+    
+                    <h2 class="subtitle">Step 1</h2>
+                    <hr>
+                    <p>
+                        To create Webex Meetings a redirection to Webex for login and authentication purposes is required.
+                    </p>
+    
+                    <!-- Button area-->
+                    <input id="login-submit" href="redirect" onclick="showLoadingText('login-submit','Loading ...')"
+                        onload="showOriginalText('login-submit', 'Login & Authenticate')" class="btn btn-primary" type="submit"
+                        value="Login & Authenticate">
+                </form>
+            </div>
+    
+            {% include "alert.html" %}
+    
+        </div>
+    </div>
+
+    <!-- Middle Rail -->
+    <div class="col-xl-6 col-md-6">
+
+        <div class="section">
+        </div>
+    </div>
+
+    <!-- Right Rail -->
+    <div class="col-xl-3 col-md-3">
+        <div class="section">
+        </div>
+    </div>
+</div>
+
+{%  endblock %}

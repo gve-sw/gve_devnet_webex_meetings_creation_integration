@@ -1,0 +1,140 @@
+{% extends "masterPage.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div id="step-one" class="steps steps--primary">
+        <div class="step visited">
+            <div class="step__icon"><span class="icon-check"></span></div>
+            <div class="step__label">Login & Authenitcate</div>
+        </div>
+        <div id="step-two" class="step {% if created %} visited {% else %} active {% endif %} ">
+            <div class="step__icon">2</div>
+            <div class="step__label">Create Meetings</div>
+        </div>
+        <div id="step-three" class="step">
+            <div class="step__icon">3
+            </div>
+            <div class="step__label">Update CSV</div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <!-- Left Rail -->
+    <div class="col-xl-3 col-md-3">
+        <div class="section">
+            <div class="panel panel--loose panel--raised base-margin-bottom">
+                <h2 class="subtitle">Step 1</h2>
+                <hr>
+                <div class="panel-icon">
+                    <div class="flex-center-vertical">
+                        <div class="flex-center">
+                            <span class="icon-check-outline icon-size-24"></span>
+                        </div>
+                        <div class="flex-fluid half-margin-left ">
+                            Successful login & authentication
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Middle Rail -->
+    <div class="col-xl-6 col-md-6">
+        <div class="section">
+            <div class="panel panel--loose panel--raised base-margin-bottom">
+                <h2 class="subtitle">Step 2 </h2>
+                <hr>
+
+                {% include "alert.html" %}
+                
+                <form action="/meeting" method="POST">
+                    <div class="form-group base-margin-bottom">
+                        <div class="form-group__text">
+                            <input id="title" name="title" type="text" required="">
+                            <label for="title">Meeting Name:* </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group base-margin-bottom">
+                        <div class="form-group__text">
+                            <input id="meeting_count" name="meeting_count" type="number" required="">
+                            <label for="meeting_count">Meeting Count:* </label>
+                        </div>
+                        <div class="help-block" role="alert">
+                            <span>Each meeting will be identified by an additional number</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group base-margin-bottom">
+                        <div class="form-group__text">
+                            <input id="start_date" name="start_date" type="datetime-local" required="" min="">
+                            <label for="start_date">Start Date:* </label>
+                        </div>
+                        <div class="help-block" role="alert">
+                            <span>Please choose a date in the future</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group base-margin-bottom">
+                        <div class="form-group__text">
+                            <input id="end_date" name="end_date" type="datetime-local" required="" min="">
+                            <label for="end_date">End Date:* </label>
+                        </div>
+                        <div class="help-block" role="alert">
+                            <span>Please choose a date which is later than the start date </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group base-margin-bottom">
+                        <div class="form-group__text">
+                            <input id="speaker_email" name="speaker_email" type="email" required="">
+                            <label for="speaker_email">Speaker Email:* </label>
+                        </div>
+                        <div class="help-block" role="alert">
+                            <span>Please use the same email as used for login if logged in with a non admin account</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group base-margin-bottom">
+                        <label for="start_without_speaker">Start Meeting without Speaker/Host: </label>
+                        <div class="form-group">
+                            <label class="switch base-padding-top">
+                                <input id="start_without_speaker" name="start_without_speaker" type="checkbox">
+                                <span class="switch__input"></span>
+
+                            </label>
+
+                        </div>
+                    </div>
+
+                    <!-- Button area-->
+                    <input id="meetings-submit" onclick="showLoadingText('meetings-submit', 'Creating Meetings ... ');"
+                    downloadonload="showOriginalText('meetings-submit', 'Schedule Meetings')"  class="btn btn-primary" type="submit"
+                        value="Schedule Meetings">
+                    <span class="required-label pull-right">* required fields</span>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Rail -->
+    <div class="col-xl-3 col-md-3">
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        today = new Date();
+        timezone_shift = today.getTimezoneOffset()
+        today.setMinutes(today.getMinutes() - timezone_shift + 15);
+        today_format = today.toJSON().slice(0,19);
+        $('input[type=datetime-local]').val(today_format);
+        $('input[type=datetime-local]').attr({"min": today_format});
+    });
+</script>
+
+{% endblock %}
