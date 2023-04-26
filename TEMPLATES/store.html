@@ -15,7 +15,7 @@
         <div id="step-three" class="step {% if updated %} visited {% else %} active {% endif %} ">
             <div class="step__icon">{% if updated %}<span class="icon-check"></span>{% else %} 3 {% endif %}
             </div>
-            <div class="step__label">Update CSV</div>
+            <div class="step__label">Update File</div>
         </div>
     </div>
 </div>
@@ -98,16 +98,16 @@
 
                 {% if updated == true %}
                 <div class="alert alert--success">
-                    <div class="alert__message">Updated CSV successful. <a href="/meeting">Add another meeting</a></div>
+                    <div class="alert__message">Updated File successful. <a href="/meeting">Add another meeting</a></div>
                 </div>
                 {% endif %}
 
                 <form id="spaces-form" action="/update" method="POST">
 
                     <input id="update-submit" onclick="showLoadingText('update-submit', 'Updating ... ');"
-                        downloadonload="showOriginalText('update-submit', 'Add Data to CSV')" class="btn btn-primary"
+                        downloadonload="showOriginalText('update-submit', 'Add Data to File')" class="btn btn-primary"
                         {% if updated==true %} disabled {% endif %} type="submit"
-                        value="Add Data to CSV">
+                        value="Add Data to File">
                 </form>
 
                 {% include "alert.html" %}

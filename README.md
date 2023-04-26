@@ -92,13 +92,13 @@ To register an integration with Webex Teams:
     AUTH_TOKEN_URL=[Add first part of the OAuth Authorization URL and replace the string "authorize" with "access_token" from step 7, e.g. https://webexapis.com/v1/access_token]
     SCOPE=["spark:all", "meeting:schedules_read", "meeting:schedules_write", "meeting:admin_schedule_read", "meeting:admin_schedule_write"]
 
-    CSV_FILE_PATH=[Add the path of the local storage CSV file, e.g. meetings.xlsx or /Users/xxx/Desktop/meetings.xlsx]
-    CSV_FILE_TAB=[Add name of tab in CSV file to populate, e.g. Meetings]
+    XLSX_FILE_PATH=[Add the path of the local storage xlsx file, e.g. meetings.xlsx or /Users/xxx/Desktop/meetings.xlsx]
+    XLSX_FILE_TAB=[Add name of tab in xlsx file to populate, e.g. Meetings]
 
   ```
 > Note: Mac OS hides the .env file in the finder by default. View the demo folder for example with your preferred IDE to make the file visible.
 
-> Note: The name of and tab within the local CSV file can be changed. Still, it is required that the file provides a tab with the provided name and the defined columns, as shown in the meetings.xlsx of this repository. 
+> Note: The name of and tab within the local xlsx file can be changed. Still, it is required that the file provides a tab with the provided name and the defined columns, as shown in the meetings.xlsx of this repository. 
 
 
 ## Usage

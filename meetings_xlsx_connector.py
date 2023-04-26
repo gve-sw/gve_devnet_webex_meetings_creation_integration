@@ -16,11 +16,11 @@
 
 from openpyxl import load_workbook
 
-class Meetings_CSV_Connector():
+class Meetings_XLSX_Connector():
     
     def __init__(self, path, tab):
         '''
-        Initialize Meetings CSV connector
+        Initialize Meetings XLSX connector
         '''
         
         self.path = path
@@ -56,7 +56,7 @@ class Meetings_CSV_Connector():
         self.meetings_data = []
 
 
-    def append_meetings_data_in_csv(self, meetings):
+    def append_meetings_data_in_xlsx(self, meetings):
         '''
         Adds the in advance gathered meetings' data (see store_meetings_data()) to the local meetings Excel file. 
         Excel file needs a Meetings tab. Columns should match the values defined in store_meetings_data().

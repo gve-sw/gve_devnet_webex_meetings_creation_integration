@@ -15,7 +15,7 @@ or implied.
 from flask import Flask, render_template, request, redirect, session, url_for
 from requests_oauthlib import OAuth2Session
 
-from meetings_csv_connector import Meetings_CSV_Connector
+from meetings_xlsx_connector import Meetings_XLSX_Connector
 from webex_api_connector import Webex_API_Connector
 
 from dotenv import load_dotenv
@@ -100,7 +100,7 @@ def meeting():
     Route to provide meeting information.
     '''
 
-    meetings_csv_connector.reset_stored_meetings_data()
+    meetings_xlsx_connector.reset_stored_meetings_data()
 
     if request.method == 'POST':
         
@@ -126,9 +126,9 @@ def meeting():
                 for i in range(meeting_count):
                     numbered_title = f"{title} (Number {i})"
                     meeting = webex_api_connector.create_meetings(numbered_title, start_date, end_date, speaker_email, host_email, start_without_speaker)
-                    meetings_csv_connector.store_meetings_data(meeting, speaker_email)
+                    meetings_xlsx_connector.store_meetings_data(meeting, speaker_email)
 
-                meetings = meetings_csv_connector.meetings_data
+                meetings = meetings_xlsx_connector.meetings_data
 
                 return render_template('store.html', meetings = meetings, created = True, updated=False)
             
@@ -141,13 +141,13 @@ def meeting():
 @app.route("/update", methods=["GET", "POST"])
 def update():
     '''
-    Route to show information of created meetings and to trigger the update of the local CSV file.
+    Route to show information of created meetings and to trigger the update of the local xlsx file.
     '''
     try:
         
-        meetings = meetings_csv_connector.meetings_data
+        meetings = meetings_xlsx_connector.meetings_data
 
-        meetings_csv_connector.append_meetings_data_in_csv(meetings)
+        meetings_xlsx_connector.append_meetings_data_in_xlsx(meetings)
 
         return render_template('store.html', meetings = meetings, created = True, updated=True)
     
@@ -164,10 +164,10 @@ if __name__ == "__main__":
     AUTH_TOKEN_URL = os.environ['AUTH_TOKEN_URL']
     SCOPE = json.loads(os.environ['SCOPE']) 
 
-    CSV_FILE_PATH = os.environ['CSV_FILE_PATH']
-    CSV_FILE_TAB = os.environ['CSV_FILE_TAB']
+    XLSX_FILE_PATH = os.environ['XLSX_FILE_PATH']
+    XLSX_FILE_TAB = os.environ['XLSX_FILE_TAB']
 
-    meetings_csv_connector = Meetings_CSV_Connector(CSV_FILE_PATH, CSV_FILE_TAB)
+    meetings_xlsx_connector = Meetings_XLSX_Connector(XLSX_FILE_PATH, XLSX_FILE_TAB)
     
     app.run(port='5000', debug=True)
 
